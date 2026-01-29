@@ -33,7 +33,8 @@ export function InterventionBuilder({
     populationDetailQueryOptions(populationName)
   );
 
-  const availableLayers = ["all", ...(population?.available_layers || [])];
+  // Note: "all" is not supported by the API - must use specific layers
+  const availableLayers = population?.available_layers || [];
 
   // Default end date: 30 days after start
   const defaultEndDate = () => {
@@ -43,8 +44,9 @@ export function InterventionBuilder({
   };
 
   const addIntervention = () => {
+    if (availableLayers.length === 0) return;
     const newIntervention: InterventionFormData = {
-      layer: availableLayers[0] || "all",
+      layer: availableLayers[0],
       start_date: startDate,
       end_date: defaultEndDate(),
       reduction_pct: 50,
@@ -101,7 +103,7 @@ export function InterventionBuilder({
               <SelectContent>
                 {availableLayers.map((layer) => (
                   <SelectItem key={layer} value={layer}>
-                    {layer === "all" ? "All layers" : layer.charAt(0).toUpperCase() + layer.slice(1)}
+                    {layer.charAt(0).toUpperCase() + layer.slice(1)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -155,10 +157,16 @@ export function InterventionBuilder({
         variant="outline"
         className="w-full"
         onClick={addIntervention}
+        disabled={availableLayers.length === 0}
       >
         <Plus className="mr-2 h-4 w-4" />
         Add Intervention
       </Button>
+      {availableLayers.length === 0 && (
+        <p className="text-xs text-muted-foreground text-center">
+          Select a population to add interventions
+        </p>
+      )}
     </div>
   );
 }

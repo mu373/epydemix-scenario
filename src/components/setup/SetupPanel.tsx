@@ -257,7 +257,9 @@ export function SetupPanel() {
     };
 
     try {
+      console.log("=== Sending request ===", JSON.stringify(request, null, 2));
       const response = await mutation.mutateAsync(request);
+      console.log("=== Response received ===", JSON.stringify(response, null, 2));
 
       if (response.status === "error") {
         toast.error(`Simulation failed: ${response.error}`);
@@ -272,6 +274,7 @@ export function SetupPanel() {
         response,
       };
 
+      console.log("=== Adding scenario ===", scenario.id, scenario.name);
       addScenario(scenario);
       setLock(true);
       setScenarioName("");

@@ -48,6 +48,11 @@ export function TrajectoryChart() {
   const primaryScenario = useAtomValue(primaryScenarioAtom);
   const comparisonScenarios = useAtomValue(comparisonScenariosAtom);
 
+  // Debug logging
+  console.log("=== TrajectoryChart render ===");
+  console.log("primaryScenario:", primaryScenario?.id, primaryScenario?.name);
+  console.log("compartments:", primaryScenario?.response?.metadata?.compartments);
+
   // Get available compartments and transitions
   const compartments = primaryScenario?.response?.metadata?.compartments || [];
   const transitions = useMemo(() => {
