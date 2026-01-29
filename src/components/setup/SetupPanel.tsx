@@ -92,7 +92,7 @@ const defaultFormState: SimulationFormState = {
   endDate: new Date(Date.now() + 250 * 24 * 60 * 60 * 1000)
     .toISOString()
     .split("T")[0],
-  nsim: 100,
+  nsim: 20,
   seed: null,
   initialConditions: { infected_pct: 0.1, immune_pct: 25.0 },
   parameters: getDefaultParameters("SEIR"),
